@@ -16,7 +16,7 @@ class RealtimeDatabaseViewController: UIViewController {
     
     @IBOutlet weak var labelMessage: UILabel!
     
-    var refArtists: FIRDatabaseReference!
+    var refArtists: DatabaseReference!
     
     @IBOutlet weak var tableViewArtists: UITableView!
     
@@ -30,11 +30,11 @@ class RealtimeDatabaseViewController: UIViewController {
         tableViewArtists.delegate = self
         tableViewArtists.dataSource = self
         //getting a reference to the node artists
-        refArtists = FIRDatabase.database().reference().child("artists")
+        refArtists = Database.database().reference().child("artists")
         
         
         //observing the the data changes
-        refArtists.observe(FIRDataEventType.value, with: { (snapshot) in
+        refArtists.observe(DataEventType.value, with: { (snapshot) in
             // if the reference have some values
             if snapshot.childrenCount > 0 {
                 //clearing the list
@@ -42,7 +42,7 @@ class RealtimeDatabaseViewController: UIViewController {
                 
                 //iterationg through all the values
                 
-                for artist in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                for artist in snapshot.children.allObjects as! [DataSnapshot] {
                     //getting values
                     
                     let artistObject = artist.value as? [String:AnyObject]
